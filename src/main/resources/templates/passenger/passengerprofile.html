@@ -79,6 +79,11 @@ li a:hover {
                     <div>
                         <h3>Wallet</h3>
                         <p>Available Balance: <b>₹<span th:text="${passenger.walletMoney}"></span></b></p>
+                        <p><button onclick="addMoney()">+ Add Money</button></p>
+                        <form  id="walletMoneyForm" style="display: none;" action="/passenger/addbalance" method="post">
+                            <input type="number" name="walletMoney">
+                            <button type="submit">Add</button>
+                        </form>
                     </div>
                     <h3>Passenger's Detail</h3>
                     <table>
@@ -133,7 +138,6 @@ li a:hover {
                     <div>
                         <div th:if="${passenger.activities != null and not #lists.isEmpty(passenger.activities)}">
                             <h3>Activities Registered For</h3>
-                            <span th:text="${passenger.activities}"></span>
                             
                         </div>
                         <div th:if="${passenger.activities == null or #lists.isEmpty(passenger.activities)}">
@@ -168,5 +172,11 @@ li a:hover {
             </td>
         </tr>
     </table>
+    <script>
+        function addMoney(){
+            let form = document.getElementById("walletMoneyForm");
+            form.style.display = "block";
+        }
+    </script>
 </body>
 </html>

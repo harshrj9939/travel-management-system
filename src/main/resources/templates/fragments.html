@@ -7,7 +7,12 @@
 </head>
 <body>
         <th:block th:fragment="sidebar">
+            
             <ul>
+                <li><a th:href="@{/logout}">
+                    <button>Logout</button>
+                </a>
+                </li>
                 <li><a href="/admin/destination">Destination</a></li>
                 <li><a href="/admin/travelpackage">Travel Package</a></li>
                 <li><a href="/admin/activity">Activity</a></li>
@@ -15,7 +20,11 @@
             </ul>
         </th:block>
         <th:block th:fragment="passengersidebar">
+            
             <ul>
+                <li><a th:href="@{/logout}">
+                    <button>Logout</button>
+                </a></li>
                 <li><a href="/passenger/profile">Profile</a></li>
                 <li><a href="/passenger/travelpackage">Travel Package</a></li>
                 <li><a href="/passenger/activity">Activity</a></li>

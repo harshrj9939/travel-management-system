@@ -62,12 +62,31 @@ public class ActivityService {
                 passenger.setActivities(activities);
                 double passengerWalletMoney = passenger.getWalletMoney();
                 double activityPrice = activity.getActivityCost();
-                if(passengerWalletMoney > activityPrice){
+
+                if(passenger.getPassengerType().equalsIgnoreCase("standard") && passengerWalletMoney > activityPrice){
                     passenger.setWalletMoney(passengerWalletMoney-activityPrice);
                     passengerRepository.save(passenger);
                     activity.setNumberOfPassengerRegistered(numberofpassengerRegistered+1);
                     activityRepository.save(activity);
-                }else{
+                }
+
+                else if(passenger.getPassengerType().equalsIgnoreCase("gold") && passengerWalletMoney > 0.1 * activityPrice){
+                    activityPrice = activityPrice - (0.1 * activityPrice);
+                    passenger.setWalletMoney(passengerWalletMoney-activityPrice);
+                    passengerRepository.save(passenger);
+                    activity.setNumberOfPassengerRegistered(numberofpassengerRegistered+1);
+                    activityRepository.save(activity);
+                }
+
+                else if(passenger.getPassengerType().equalsIgnoreCase("premium")){
+                    activityPrice = 0 * activityPrice;
+                    passenger.setWalletMoney(passengerWalletMoney-activityPrice);
+                    passengerRepository.save(passenger);
+                    activity.setNumberOfPassengerRegistered(numberofpassengerRegistered+1);
+                    activityRepository.save(activity);
+                }
+
+                else{
                     throw new Exception("You Don't have Enough Money in your Wallet");
                 }
             }else{

@@ -19,7 +19,7 @@ public class Passenger {
     private String passengerType;
     @Column(unique = true, nullable = false)
     private String passengerMobile;
-    private double walletMoney;
+    private double walletMoney = 0;
     private String role;
     private String password;
     @ManyToOne

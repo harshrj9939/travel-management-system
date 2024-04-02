@@ -18,8 +18,8 @@
             text-align: center;
         }
         nav {
-            background-color: #007bff;
-            color: #fff;
+            background-color: #82a3d3;
+            color: #000000;
             text-align: right;
             padding: 10px 20px;
         }
@@ -28,6 +28,19 @@
             text-decoration: none;
             margin-left: 20px;
         }
+
+        button {
+    background-color: #645261;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
         .container {
             max-width: 800px;
             margin-right: 20px auto;
@@ -42,6 +55,7 @@
             bottom: 0;
             width: 100%;
         }
+
     </style>
 </head>
 <body>
@@ -49,15 +63,18 @@
         <h1>Travel Management System</h1>
     </header>
     <nav>
-        <a href="./passenger/activity.html">Activity</a>
-        <a href="./passenger/passengerprofile.html">Passenger Profile</a>
-        <a href="./passenger/travelpackage.html">Travel Package</a>
-        <a href="./passenger/contact.html">Contact us</a>
+        <a th:href="@{/contact-us}">Contact us</a>
+        <a th:if="${loggedInPassenger != null and loggedInPassenger.role =='ROLE_PASSENGER'}" th:href="@{/passenger/profile}"><button>Dashboard</button></a>
+        <a th:if="${loggedInPassenger == null}" th:href="@{/login}"><button>Login</button></a>
+        <a th:if="${loggedInPassenger == null}" th:href="@{/register-passenger}"><button>Create Account</button></a>
+        <a th:if="${loggedInPassenger != null and loggedInPassenger.role =='ROLE_ADMIN'}" th:href="@{/admin/travelpackage}"><button>Dashboard</button></a>
+        
 
     </nav>
     <div class="container">
         <h2>Welcome to our Travel Management System</h2>
         <p>Here you can manage your travel activities, view your profile, and explore various travel packages.</p>
+       
     </div>
     <footer>
         <p>&copy; 2024 Travel Management System</p>

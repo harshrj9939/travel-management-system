@@ -19,4 +19,7 @@ public class PassengerService {
     public List<Passenger> getAllPassengers(){
         return passengerRepository.findAll();
     }
+    public Passenger getPassengerByMobile(String mobile){
+        return passengerRepository.findByPassengerMobile(mobile);
+    }
 }
