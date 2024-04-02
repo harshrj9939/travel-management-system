@@ -42,6 +42,11 @@ public class BaseController {
         passenger.setPassengerName(passengerName);
         passenger.setPassengerType(passengerType);
         passenger.setPassword(passwordEncoder.encode(password));
+        
+
+        if(passengerService.getAllPassengers().size() == 0){
+            passenger.setRole("ROLE_ADMIN");
+        }
         passenger.setRole("ROLE_PASSENGER");
         passengerService.savePassenger(passenger);
     
