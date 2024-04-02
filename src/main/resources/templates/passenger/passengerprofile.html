@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+div {
+    margin-bottom: 10px;
+}
+
+h3 {
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 8px 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+li a {
+    text-decoration: none;
+    color: #333;
+}
+
+li a:hover {
+    color: #007bff;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <div th:include="fragments::passengersidebar"></div>
+            </td>
+            <td style="padding-left: 50px;">
+                
+                
+                <div>
+                    <h3 style="text-align: center;">Passenger's Profile</h3>
+                    <div>
+                        <h3>Wallet</h3>
+                        <p>Available Balance: <b>₹<span th:text="${passenger.walletMoney}"></span></b></p>
+                    </div>
+                    <h3>Passenger's Detail</h3>
+                    <table>
+                        <thead>
+                            <th>Passenger Number</th>
+                            <th>Passenger Name</th>
+                            <th>Passenger Mobile</th>
+                            <th>Passenger Type</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td th:text="${passenger.passengerNumber}"></td>
+                                <td th:text="${passenger.passengerName}"></td>
+                                <td th:text="${passenger.passengerMobile}"></td>
+                                <td th:text="${passenger.passengerType}"></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                    <div>
+                        <div th:if="${passenger.travelPackage != null}">
+                            <h3>Your travel package</h3>
+                            
+                        </div>
+                        <div th:if="${passenger.travelPackage == null}">
+                            You have not registered for travel package
+                        </div>
+                    </div>
+                    <table th:if="${passenger.travelPackage != null}">
+                        <thead>
+                            <th>travelPackage Id</th>
+                            <th>travelPackage Name</th>
+                            <th>Passenger Capacity</th>
+                            <th>Passengers Registered</th>
+                            <th>Destinations</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td th:text="${passenger.travelPackage.packageId}"></td>
+                                <td th:text="${passenger.travelPackage.packageName}"></td>
+                                <td th:text="${passenger.travelPackage.passengerCapacity}"></td>
+                                <td th:text="${passenger.travelPackage.numberOfPassenger}"></td>
+                                <td>
+                                    <th:block th:each="destination : ${passenger.travelPackage.destinations}">
+                                        <span th:text="${destination.destinationName}"></span>
+                                        <br/>
+                                    </th:block>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <div th:if="${passenger.activities != null and not #lists.isEmpty(passenger.activities)}">
+                            <h3>Activities Registered For</h3>
+                            <span th:text="${passenger.activities}"></span>
+                            
+                        </div>
+                        <div th:if="${passenger.activities == null or #lists.isEmpty(passenger.activities)}">
+                            You have not registered for any activities
+                        </div>
+                    </div>
+                    <table th:if="${passenger.activities != null and not #lists.isEmpty(passenger.activities)}">
+                        <thead>
+                            <th>Activity Id</th>
+                            <th>Activity Name</th>
+                            <th>Activity Description</th>
+                            <th>Activity Cost</th>
+                            <th>Activity Capacity</th>
+                            <th>Passenger Registered</th>
+                            <th>Activity Destination</th>
+                        </thead>
+                        <tbody>
+                            <tr th:each="activity : ${passenger.activities}">
+                                <td th:text="${activity.activityId}"></td>
+                                <td th:text="${activity.activityName}"></td>
+                                <td th:text="${activity.activityDescription}"></td>
+                                <td th:text="${activity.activityCost}"></td>
+                                <td th:text="${activity.capacity}"></td>
+                                <td th:text="${activity.numberOfPassengerRegistered}"></td>
+                                <td th:text="${activity.destination.destinationName}"></td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <th:block th:fragment="sidebar">
+            <ul>
+                <li><a href="/admin/destination">Destination</a></li>
+                <li><a href="/admin/travelpackage">Travel Package</a></li>
+                <li><a href="/admin/activity">Activity</a></li>
+                <li><a href="/admin/passenger">Passenger</a></li>
+            </ul>
+        </th:block>
+        <th:block th:fragment="passengersidebar">
+            <ul>
+                <li><a href="/passenger/profile">Profile</a></li>
+                <li><a href="/passenger/travelpackage">Travel Package</a></li>
+                <li><a href="/passenger/activity">Activity</a></li>
+            </ul>
+        </th:block>
+</body>
+</html>

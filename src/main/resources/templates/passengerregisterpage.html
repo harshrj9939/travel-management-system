@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        <div th:if="${success}" class="alert alert-success" role="alert">
+            <p th:text="${success}"></p>
+        </div>
+        <input type="text" name="passengerName" placeholder="Passenger Name">
+        <input type="text" name="passengerMobile" placeholder="Mobile Number">
+        <select name="passengerType" id="">
+            <option value="">Select Type</option>
+            <option value="Standard">Standard</option>
+            <option value="Gold">Gold</option>
+            <option value="Premium">Premium</option>
+        </select>
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>

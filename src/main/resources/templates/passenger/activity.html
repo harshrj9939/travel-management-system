@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 8px 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+li a {
+    text-decoration: none;
+    color: #333;
+}
+
+li a:hover {
+    color: #007bff;
+}
+
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <div th:include="fragments::passengersidebar"></div>
+            </td>
+            <td style="padding-left: 50px;">
+                
+                <div>
+                    <h3>List of Activitys</h3>
+                    <h2 th:if="${activities == null}">You have not Booked any travel package</h2>
+                    <div>
+                        
+                        <table>
+                            <thead>
+                                <th>Activity Id</th>
+                                <th>Activity Name</th>
+                                <th>Activity Description</th>
+                                <th>Activity Cost</th>
+                                <th>Activity Capacity</th>
+                                <th>Passenger Registered</th>
+                                <th>Activity Destination</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <tr th:each="activity : ${activities}">
+                                    <td th:text="${activity.activityId}"></td>
+                                    <td th:text="${activity.activityName}"></td>
+                                    <td th:text="${activity.activityDescription}"></td>
+                                    <td th:text="${activity.activityCost}"></td>
+                                    <td th:text="${activity.capacity}"></td>
+                                    <td th:text="${activity.numberOfPassengerRegistered}"></td>
+                                    <td th:text="${activity.destination.destinationName}"></td>
+                                    <td>
+                                        <button th:title="${activity.activityName}" th:id="${activity.activityId}" onclick="handlePackageRegistration(this)">Book this Activity</button>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </td>
+        </tr>
+    </table>
+    <script>
+        function handlePackageRegistration(button){
+            var activityId = button.id;
+            var title = button.title;
+            if (confirm("Are you sure you want to Register for this?")) {
+                // User clicked OK
+                fetch('/passenger/bookactivity', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ activityId: activityId })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log(response);
+                        console.log("request processed successfully")
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    console.log(data);
+                    alert(data.message);
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                    alert("Failed to book for activity. Please try again later.");
+                });
+            } else {
+                // User clicked Cancel
+                alert("Action canceled!");
+            }
+        }
+
+    </script>
+</body>
+</html>

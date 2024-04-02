@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+button {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 8px 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+li a {
+    text-decoration: none;
+    color: #333;
+}
+
+li a:hover {
+    color: #007bff;
+}
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <div th:include="fragments::sidebar"></div>
+            </td>
+            <td style="padding-left: 50px;">
+                <div th:if="${success}" th:text="${success}"></div>
+                <form method="post">
+                    <h2>Add New Travel Package</h2>
+                    <input type="text" name="travelPackageName" placeholder="Travel Package name">
+                    <input type="number" name="travelPackageCapacity" placeholder="Travel Package Capacity">
+                    <select name="travelPackageDestinations" id="" multiple>
+                        <option value="">Select Multiple Destination</option>
+                        <option th:each="destination : ${destinations}" th:value="${destination.destinationId}" th:text="${destination.destinationName}"></option>
+                    </select>
+                    <button type="submit">Add</button>
+                </form>
+
+                <div>
+                    <h3>List of Travel Packages</h3>
+                    <table>
+                        <thead>
+                            <th>travelPackage Id</th>
+                            <th>travelPackage Name</th>
+                            <th>Passenger Capacity</th>
+                            <th>Passengers Registered</th>
+                            <th>Destinations</th>
+                        </thead>
+                        <tbody>
+                            <tr th:each="travelPackage : ${travelPackages}">
+                                <td th:text="${travelPackage.packageId}"></td>
+                                <td th:text="${travelPackage.packageName}"></td>
+                                <td th:text="${travelPackage.passengerCapacity}"></td>
+                                <td th:text="${travelPackage.numberOfPassenger}"></td>
+                                <td>
+                                    <th:block th:each="destination : ${travelPackage.destinations}">
+                                        <span th:text="${destination.destinationName}"></span>
+                                        <br/>
+                                    </th:block>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

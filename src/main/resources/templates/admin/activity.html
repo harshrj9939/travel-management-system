@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea,
+        button {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .sidebar {
+            width: 200px;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            color: white;
+            padding-top: 20px;
+        }
+
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+            margin-bottom: 20px;
+            padding: 15px;
+            display: inline-block;
+        }
+
+        ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 8px 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+li a {
+    text-decoration: none;
+    color: #333;
+}
+
+li a:hover {
+    color: #007bff;
+}
+    
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <div th:include="fragments::sidebar"></div>
+            </td>
+            <td style="padding-left: 50px;">
+                <div th:if="${success}" th:text="${success}"></div>
+                <form method="post">
+                    <h2>Add New Activity</h2>
+                    <input type="text" name="activityName" placeholder="Activity Name">
+                    
+                    <input type="number" name="activityCost" placeholder="Cost">
+                    <input type="number" name="activityCapacity" placeholder="Capacity">
+                    <select name="destination">
+                        <option value="">Select Destination</option>
+                        <option th:each="destination : ${destinations}" th:value="${destination.destinationId}" th:text="${destination.destinationName}"></option>
+                    </select>
+                    <br>
+                    <textarea name="activityDescription" id="" cols="30" rows="10" placeholder="Description"></textarea><br>
+                    <button type="submit">Add</button>
+                </form>
+
+                <div>
+                    <h3>List of Activitys</h3>
+                    <table>
+                        <thead>
+                            <th>Activity Id</th>
+                            <th>Activity Name</th>
+                            <th>Activity Description</th>
+                            <th>Activity Cost</th>
+                            <th>Activity Capacity</th>
+                            <th>Activity Destination</th>
+                        </thead>
+                        <tbody>
+                            <tr th:each="activity : ${activities}">
+                                <td th:text="${activity.activityId}"></td>
+                                <td th:text="${activity.activityName}"></td>
+                                <td th:text="${activity.activityDescription}"></td>
+                                <td th:text="${activity.activityCost}"></td>
+                                <td th:text="${activity.capacity}"></td>
+                                <td th:text="${activity.destination.destinationName}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
