@@ -46,8 +46,8 @@ public class BaseController {
 
         if(passengerService.getAllPassengers().size() == 0){
             passenger.setRole("ROLE_ADMIN");
-        }
-        passenger.setRole("ROLE_PASSENGER");
+        }else{ passenger.setRole("ROLE_PASSENGER");}
+       
         passengerService.savePassenger(passenger);
     
         attributes.addFlashAttribute("success", "Your record has been saved successfully");
