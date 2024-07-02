@@ -73,7 +73,4 @@ public class Activity {
     public void setNumberOfPassengerRegistered(int numberOfPassengerRegistered) {
         this.numberOfPassengerRegistered = numberOfPassengerRegistered;
     }
-
-    
-
 }

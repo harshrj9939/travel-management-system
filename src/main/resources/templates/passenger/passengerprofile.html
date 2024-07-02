@@ -5,175 +5,209 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        table, th, td {
-          border: 1px solid black;
-          border-collapse: collapse;
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
         }
 
-        body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
-table {
-    width: 100%;
-    margin-bottom: 20px;
-    border-collapse: collapse;
-    background-color: #fff;
-}
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
+        th {
+            background-color: #f7f7f7;
+        }
 
-th {
-    background-color: #f2f2f2;
-}
+        th:first-child, td:first-child {
+            border-left: none;
+        }
 
-div {
-    margin-bottom: 10px;
-}
+        th:last-child, td:last-child {
+            border-right: none;
+        }
 
-h3 {
-    margin-bottom: 10px;
-}
+        div {
+            margin-bottom: 20px;
+        }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-}
+        h3 {
+            margin-bottom: 20px;
+            color: #007bff;
+        }
 
-li {
-    padding: 8px 16px;
-    border-bottom: 1px solid #ddd;
-}
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
 
-li a {
-    text-decoration: none;
-    color: #333;
-}
+        li {
+            padding: 10px 16px;
+            border-bottom: 1px solid #ddd;
+        }
 
-li a:hover {
-    color: #007bff;
-}
+        li a {
+            text-decoration: none;
+            color: #333;
+        }
 
+        li a:hover {
+            color: #007bff;
+        }
 
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .container {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
-    <table>
-        <tr>
-            <td>
-                <div th:include="fragments::passengersidebar"></div>
-            </td>
-            <td style="padding-left: 50px;">
-                
-                
-                <div>
-                    <h3 style="text-align: center;">Passenger's Profile</h3>
+    <div class="container">
+        <table>
+            <tr>
+                <td style="width: 250px;">
+                    <div th:include="fragments::passengersidebar"></div>
+                </td>
+                <td style="padding-left: 50px;">
                     <div>
-                        <h3>Wallet</h3>
-                        <p>Available Balance: <b>₹<span th:text="${passenger.walletMoney}"></span></b></p>
-                        <p><button onclick="addMoney()">+ Add Money</button></p>
-                        <form  id="walletMoneyForm" style="display: none;" action="/passenger/addbalance" method="post">
-                            <input type="number" name="walletMoney">
-                            <button type="submit">Add</button>
-                        </form>
+                        <h3 style="text-align: center;">Passenger's Profile</h3>
+                        <div>
+                            <h3>Wallet</h3>
+                            <p>Available Balance: <b>₹<span th:text="${passenger.walletMoney}"></span></b></p>
+                            <p><button onclick="addMoney()">+ Add Money</button></p>
+                            <form id="walletMoneyForm" style="display: none;" action="/passenger/addbalance" method="post">
+                                <input type="number" name="walletMoney">
+                                <button type="submit">Add</button>
+                            </form>
+                        </div>
+                        <h3>Passenger's Detail</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Passenger Number</th>
+                                    <th>Passenger Name</th>
+                                    <th>Passenger Mobile</th>
+                                    <th>Passenger Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td th:text="${passenger.passengerNumber}"></td>
+                                    <td th:text="${passenger.passengerName}"></td>
+                                    <td th:text="${passenger.passengerMobile}"></td>
+                                    <td th:text="${passenger.passengerType}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <div th:if="${passenger.travelPackage != null}">
+                                <h3>Your Travel Package</h3>
+                            </div>
+                            <div th:if="${passenger.travelPackage == null}">
+                                You have not registered for a travel package.
+                            </div>
+                        </div>
+                        <table th:if="${passenger.travelPackage != null}">
+                            <thead>
+                                <tr>
+                                    <th>Travel Package Id</th>
+                                    <th>Travel Package Name</th>
+                                    <th>Passenger Capacity</th>
+                                    <th>Passengers Registered</th>
+                                    <th>Destinations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td th:text="${passenger.travelPackage.packageId}"></td>
+                                    <td th:text="${passenger.travelPackage.packageName}"></td>
+                                    <td th:text="${passenger.travelPackage.passengerCapacity}"></td>
+                                    <td th:text="${passenger.travelPackage.numberOfPassenger}"></td>
+                                    <td>
+                                        <th:block th:each="destination : ${passenger.travelPackage.destinations}">
+                                            <span th:text="${destination.destinationName}"></span><br/>
+                                        </th:block>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <div th:if="${passenger.activities != null and not #lists.isEmpty(passenger.activities)}">
+                                <h3>Activities Registered For</h3>
+                            </div>
+                            <div th:if="${passenger.activities == null or #lists.isEmpty(passenger.activities)}">
+                                You have not registered for any activities.
+                            </div>
+                        </div>
+                        <table th:if="${passenger.activities != null and not #lists.isEmpty(passenger.activities)}">
+                            <thead>
+                                <tr>
+                                    <th>Activity Id</th>
+                                    <th>Activity Name</th>
+                                    <th>Activity Description</th>
+                                    <th>Activity Cost</th>
+                                    <th>Activity Capacity</th>
+                                    <th>Passenger Registered</th>
+                                    <th>Activity Destination</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="activity : ${passenger.activities}">
+                                    <td th:text="${activity.activityId}"></td>
+                                    <td th:text="${activity.activityName}"></td>
+                                    <td th:text="${activity.activityDescription}"></td>
+                                    <td th:text="${activity.activityCost}"></td>
+                                    <td th:text="${activity.capacity}"></td>
+                                    <td th:text="${activity.numberOfPassengerRegistered}"></td>
+                                    <td th:text="${activity.destination.destinationName}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <h3>Passenger's Detail</h3>
-                    <table>
-                        <thead>
-                            <th>Passenger Number</th>
-                            <th>Passenger Name</th>
-                            <th>Passenger Mobile</th>
-                            <th>Passenger Type</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td th:text="${passenger.passengerNumber}"></td>
-                                <td th:text="${passenger.passengerName}"></td>
-                                <td th:text="${passenger.passengerMobile}"></td>
-                                <td th:text="${passenger.passengerType}"></td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-                    <div>
-                        <div th:if="${passenger.travelPackage != null}">
-                            <h3>Your travel package</h3>
-                            
-                        </div>
-                        <div th:if="${passenger.travelPackage == null}">
-                            You have not registered for travel package
-                        </div>
-                    </div>
-                    <table th:if="${passenger.travelPackage != null}">
-                        <thead>
-                            <th>travelPackage Id</th>
-                            <th>travelPackage Name</th>
-                            <th>Passenger Capacity</th>
-                            <th>Passengers Registered</th>
-                            <th>Destinations</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td th:text="${passenger.travelPackage.packageId}"></td>
-                                <td th:text="${passenger.travelPackage.packageName}"></td>
-                                <td th:text="${passenger.travelPackage.passengerCapacity}"></td>
-                                <td th:text="${passenger.travelPackage.numberOfPassenger}"></td>
-                                <td>
-                                    <th:block th:each="destination : ${passenger.travelPackage.destinations}">
-                                        <span th:text="${destination.destinationName}"></span>
-                                        <br/>
-                                    </th:block>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div>
-                        <div th:if="${passenger.activities != null and not #lists.isEmpty(passenger.activities)}">
-                            <h3>Activities Registered For</h3>
-                            
-                        </div>
-                        <div th:if="${passenger.activities == null or #lists.isEmpty(passenger.activities)}">
-                            You have not registered for any activities
-                        </div>
-                    </div>
-                    <table th:if="${passenger.activities != null and not #lists.isEmpty(passenger.activities)}">
-                        <thead>
-                            <th>Activity Id</th>
-                            <th>Activity Name</th>
-                            <th>Activity Description</th>
-                            <th>Activity Cost</th>
-                            <th>Activity Capacity</th>
-                            <th>Passenger Registered</th>
-                            <th>Activity Destination</th>
-                        </thead>
-                        <tbody>
-                            <tr th:each="activity : ${passenger.activities}">
-                                <td th:text="${activity.activityId}"></td>
-                                <td th:text="${activity.activityName}"></td>
-                                <td th:text="${activity.activityDescription}"></td>
-                                <td th:text="${activity.activityCost}"></td>
-                                <td th:text="${activity.capacity}"></td>
-                                <td th:text="${activity.numberOfPassengerRegistered}"></td>
-                                <td th:text="${activity.destination.destinationName}"></td>
-                            </tr>
-                           
-                        </tbody>
-                    </table>
-                    
-                </div>
-            </td>
-        </tr>
-    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
     <script>
-        function addMoney(){
+        function addMoney() {
             let form = document.getElementById("walletMoneyForm");
             form.style.display = "block";
         }
